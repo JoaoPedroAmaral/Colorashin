@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/Style.css" />
+  </head>
+  <body>
+    <header class="NavBar">
+      <a href="NewInicialPage.html" class="NavLink">
+        <div class="LogoNavbar">
+          <img
+            src="../image/jashiHeadIcon.png"
+            width="50px"
+            height="50px"
+            class="iconNavBar"
+            alt="Logo"
+          />
+          <h3 class="colorashin">
+            <span>C</span><span>o</span><span>l</span><span>o</span
+            ><span>r</span><span>a</span><span>s</span><span>h</span
+            ><span>i</span><span>n</span>
+          </h3>
+        </div>
+      </a>
+
+      <div class="NavButtons">
+        <a
+          class="LoginButton"
+          style="text-decoration: none"
+          href="MinhaConta.html"
+          >Minha conta</a
+        >
+        <button
+          class="SignUpButton"
+          id="logoutBtn"
+          style="padding: 8px 16px; font-size: 16px"
+        >
+          Sair
+        </button>
+      </div>
+    </header>
+    <!-- MODAL - ESTRUTURA CORRIGIDA -->
+    <div
+      class="bodyTransform"
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        gap: 32px;
+        padding: 40px 0;
+      "
+    >
+      <div class="headerPerfil" style="margin-top: 5em">
+        <div>
+          <h2>Pedido #ORD-001</h2>
+          <p>Acesse e baixe seus desenhos em PDF</p>
+        </div>
+        <div>
+          <button
+            class="SignUpButton"
+            id="logoutBtn"
+            style="padding: 8px 16px; font-size: 16px"
+          >
+            Nova Requisição
+          </button>
+        </div>
+      </div>
+      <div class="stepsGrid">
+        <div class="cardStepItem">
+          <div style="margin: 12px 0; text-align: start">
+            <p style="margin: 10px 0">Total de paginas</p>
+            <h3>15</h3>
+          </div>
+          <div>
+            🧾
+            <!--Pegar icons do bootstrap/ talwind q for usar-->
+          </div>
+        </div>
+        <div class="cardStepItem">
+          <div style="margin: 12px 0; text-align: start">
+            <p style="margin: 10px 0">preço do documento</p>
+            <h3>R$ 9,90</h3>
+          </div>
+          <div>
+            🧾
+            <!--Pegar icons do bootstrap/ talwind q for usar-->
+          </div>
+        </div>
+
+        <div class="cardStepItem">
+          <div style="margin: 12px 0; text-align: start">
+            <p style="margin: 10px 0">status do documento</p>
+            <h3>Concluído</h3>
+          </div>
+          <div>
+            🧾
+            <!--Pegar icons do bootstrap/ talwind q for usar-->
+          </div>
+        </div>
+      </div>
+      <div class="stepsGrid">
+        <div class="cardStepItem" style="align-items: start; width: 100%">
+          <div style="text-align: start">
+            <div style="position: relative; display: inline-block; width: 100%">
+              <span
+                class="status-badge status-concluido"
+                style="
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  z-index: 5;
+                  padding: 4px 12px;
+                  border-radius: 20px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background-color: #fddde6;
+                  color: #f06292;
+                "
+              >
+                Book
+              </span>
+
+              <img
+                src="../image/jashiHeadIcon.png"
+                alt="Sample Image"
+                style="width: 100%; border-radius: 8px; display: block"
+              />
+            </div>
+            <p style="font-weight: bold; margin-top: 12px">
+              Desenho para Colorir - Paisagem
+            </p>
+            <p style="color: #666; font-size: 14px">
+              2.4 MB • 03 de jan. de 2025
+            </p>
+
+            <div style="display: flex; align-items: center; gap: 8px">
+              <a
+                href="./Download.html"
+                class="btn btn-primary"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  text-decoration: none;
+                  width: 80%;
+                "
+              >
+                💹 Baixar PDF
+              </a>
+              <a class="btn btn-secondary" style="width: 10%">
+                📃  <!--Baixar icone-->
+              </a>
+              <a class="btn btn-secondary" style="width: 10%">
+                🔗 <!--Compartilhar icone-->
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="cardStepItem" style="align-items: start; width: 100%">
+          <div style="text-align: start">
+            <div style="position: relative; display: inline-block; width: 100%">
+              <span
+                class="status-badge status-concluido"
+                style="
+                  position: absolute;
+                  top: 10px;
+                  right: 10px;
+                  z-index: 5;
+                  padding: 4px 12px;
+                  border-radius: 20px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  background-color: #fddde6;
+                  color: #f06292;
+                "
+              >
+                Paginas
+              </span>
+
+              <img
+                src="../image/jashiHeadIcon.png"
+                alt="Sample Image"
+                style="width: 100%; border-radius: 8px; display: block"
+              />
+            </div>
+            <p style="font-weight: bold; margin-top: 12px">
+              Desenho para Colorir - Paisagem
+            </p>
+            <p style="color: #666; font-size: 14px">
+              2.4 MB • 03 de jan. de 2025
+            </p>
+
+            <div style="display: flex; align-items: center; gap: 8px">
+              <a
+                href="./Download.html"
+                class="btn btn-primary"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  text-decoration: none;
+                  width: 80%;
+                "
+              >
+                💹 Baixar PDF
+              </a>
+              <a class="btn btn-secondary" style="width: 10%">
+                📃  <!--Baixar icone-->
+              </a>
+              <a class="btn btn-secondary" style="width: 10%">
+                🔗 <!--Compartilhar icone-->
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="Footer">
+      <div class="LinkFooter">
+        <div>
+          <img
+            src="../image/icon.png"
+            width="30%"
+            class="iconFooter"
+            alt="Logo"
+          />
+        </div>
+        <div>
+          <h4 class="FooterTitle">Links Rápidos</h4>
+          <a href="InitialPage.html" class="FooterLink">Home</a>
+          <a href="About.html" class="FooterLink">About</a>
+          <a href="TransformImage.html" class="FooterLink">Transform Image</a>
+          <a href="TransformImage.html" class="FooterLink">Historico</a>
+          <a href="TransformImage.html" class="FooterLink">Download</a>
+        </div>
+        <div>
+          <h4 class="FooterTitle">Suporte</h4>
+          <a href="InitialPage.html" class="FooterLink">Ajuda</a>
+          <a href="About.html" class="FooterLink">Contato</a>
+          <h4 class="FooterTitle">Legal</h4>
+          <a href="InitialPage.html" class="FooterLink">Termo de uso</a>
+          <a href="About.html" class="FooterLink">Privacidade</a>
+        </div>
+      </div>
+      <div class="LineFooter"></div>
+      <p style="margin: 0">© 2026 Colorashin. Todos os direitos reservados.</p>
+    </footer>
+    <div
+      id="scrollBtn"
+      class="scroll-btn-container"
+      onclick="handleScrollAction()"
+    >
+      <svg class="progress-ring" width="50" height="50">
+        <circle
+          stroke="#e6e6e6"
+          stroke-width="4"
+          fill="transparent"
+          r="22"
+          cx="25"
+          cy="25"
+        />
+        <circle
+          class="progress-ring__circle"
+          stroke="#007e7a"
+          stroke-width="4"
+          fill="transparent"
+          r="22"
+          cx="25"
+          cy="25"
+        />
+      </svg>
+
+      <span id="scrollIcon" class="arrow-icon">⬇</span>
+    </div>
+    <script>
+      const circle = document.querySelector(".progress-ring__circle");
+      const radius = circle.r.baseVal.value;
+      const circumference = radius * 2 * Math.PI;
+      const scrollIcon = document.getElementById("scrollIcon");
+      const scrollBtn = document.getElementById("scrollBtn");
+
+      circle.style.strokeDasharray = `${circumference} ${circumference}`;
+      circle.style.strokeDashoffset = circumference;
+
+      function setProgress(percent) {
+        const offset = circumference - (percent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+      }
+
+      function onScroll() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+
+        let scrollPercent = (scrollTop / docHeight) * 100;
+
+        setProgress(scrollPercent);
+
+        if (scrollPercent < 50) {
+          scrollIcon.innerHTML = "⬇";
+          scrollIcon.style.transform = "translateY(0)";
+        } else {
+          scrollIcon.innerHTML = "⬆";
+          scrollIcon.style.transform = "translateY(-2px)";
+        }
+      }
+
+      // Função de clique
+      function handleScrollAction() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+
+        if (scrollTop < 100) {
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+        } else {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      window.addEventListener("scroll", onScroll);
+
+      onScroll();
+    </script>
+    <script>
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector(".NavBar");
+
+        // Se o scroll for maior que 50px, adiciona a classe, senão remove
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cores = [
+          "#FFD700", // Amarelo
+          "#00E676", // Verde
+          "#2979FF", // Azul
+          "#FF4081", // Vermelho/Rosa
+        ];
+
+        const titulo = document.querySelector(".headerPerfil h2");
+
+        if (titulo) {
+          const corSorteada = cores[Math.floor(Math.random() * cores.length)];
+
+          titulo.style.color = corSorteada;
+        }
+      });
+    </script>
+  </body>
+</html>

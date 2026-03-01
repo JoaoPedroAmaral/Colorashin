@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/Style.css" />
+  </head>
+  <body>
+    <header class="NavBar">
+            <a href="NewInicialPage.html" class="NavLink">
+        <div class="LogoNavbar">
+          <img
+            src="../image/jashiHeadIcon.png"
+            width="50px"
+            height="50px"
+            class="iconNavBar"
+            alt="Logo"
+          />
+          <h3 class="colorashin">
+            <span>C</span><span>o</span><span>l</span><span>o</span
+            ><span>r</span><span>a</span><span>s</span><span>h</span
+            ><span>i</span><span>n</span>
+          </h3>
+        </div>
+      </a>
+
+      <div class="NavButtons">
+        <a class="LoginButton" style="text-decoration: none;" href="MinhaConta.html">Minha conta</a>
+        <button class="SignUpButton" id="logoutBtn" style="padding: 8px 16px; font-size: 16px;">Sair</button>
+        <!--Tambem será o botao de minha conta-->
+      </div>
+    </header>
+    <div class="bodyTransform">
+      <h1 class="titleTransform">Transforme Imagem em Desenho</h1>
+      <p class="legendTransform">Envie uma foto e veja a mágica acontecer!</p>
+
+      <label class="upload-box" for="fileInput"">
+        <label class="coisas" for="fileInput">Escolher imagem</label>
+
+        <div id="imagePreviewContainer" style="display: none">
+            <p>Imagens selecionadas:</p>
+            <div id="previewList" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;"></div>
+        </div>
+      </label>
+      <input style="display: none;" type="file" id="fileInput" accept="image/*" multiple/>
+      <button class="transformButton" style="margin-top: 32px;" id="transformButton">Transformar Imagem</button>
+    </div>
+    <footer class="Footer">
+      <div class="LinkFooter">
+        <div>
+          <img
+            src="../image/icon.png"
+            width="30%"
+            class="iconFooter"
+            alt="Logo"
+          />
+        </div>
+        <div>
+          <h4 class="FooterTitle">Links Rápidos</h4>
+          <a href="InitialPage.html" class="FooterLink">Home</a>
+          <a href="About.html" class="FooterLink">About</a>
+          <a href="TransformImage.html" class="FooterLink">Transform Image</a>
+          <a href="TransformImage.html" class="FooterLink">Historico</a>
+          <a href="TransformImage.html" class="FooterLink">Download</a>
+        </div>
+        <div>
+          <h4 class="FooterTitle">Suporte</h4>
+          <a href="InitialPage.html" class="FooterLink">Ajuda</a>
+          <a href="About.html" class="FooterLink">Contato</a>
+          <h4 class="FooterTitle">Legal</h4>
+          <a href="InitialPage.html" class="FooterLink">Termo de uso</a>
+          <a href="About.html" class="FooterLink">Privacidade</a>
+        </div>
+      </div>
+      <div class="LineFooter"></div>
+      <p style="margin: 0">© 2026 Colorashin. Todos os direitos reservados.</p>
+    </footer>
+  </body>
+  <script src="../js/script.js"></script>
+</html>

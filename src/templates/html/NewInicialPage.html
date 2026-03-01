@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/Style.css" />
+  </head>
+  <body>
+    <header class="NavBar">
+      <a href="NewInicialPage.html" class="NavLink">
+        <div class="LogoNavbar">
+          <img
+            src="../image/jashiHeadIcon.png"
+            width="50px"
+            height="50px"
+            class="iconNavBar"
+            alt="Logo"
+          />
+          <h3 class="colorashin">
+            <span>C</span><span>o</span><span>l</span><span>o</span
+            ><span>r</span><span>a</span><span>s</span><span>h</span
+            ><span>i</span><span>n</span>
+          </h3>
+        </div>
+      </a>
+
+      <div class="NavButtons">
+        <button class="LoginButton" id="loginBtn">Login</button>
+        <button class="SignUpButton" id="signupBtn">Registre-se</button>
+      </div>
+    </header>
+    <!-- MODAL - ESTRUTURA CORRIGIDA -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <button class="close-modal" id="closeModal">&times;</button>
+        <h2 id="modalTitle">Login</h2>
+        <form id="modalForm">
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Senha" required />
+          <button type="submit" class="modal-btn">Entrar</button>
+        </form>
+        <p class="modal-switch" id="modalSwitch">
+          Não tem conta? <span id="switchBtn">Registre-se</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="bodyTransform" style="display: flex; flex-direction: column">
+      <div class="homeContent" style="padding: 12em 0">
+        <h1 class="titleTransform">Transforme Imagem em</h1>
+        <div style="display: flex">
+          <h1 class="colorashin">
+            <span>D</span><span>E</span><span>S</span><span>E</span
+            ><span>N</span><span>H</span><span>O</span><span>S</span>
+          </h1>
+          <p>&nbsp&nbsp&nbsp</p>
+          <h1 class="colorashin">
+            <span>C</span><span>O</span><span>L</span><span>O</span
+            ><span>R</span><span>I</span><span>D</span><span>O</span>
+          </h1>
+        </div>
+        <p class="legendTransform">
+          Crie desenhos únicos a partir das suas fotos. Perfeito para crianças,
+          adultos e educadores. Baixe em PDF de alta qualidade.
+        </p>
+
+        <div class="btn_conjunt">
+          <a
+            class="transformButton"
+            style="margin-top: 32px"
+            id="transformButton"
+            href="TransformImage.html"
+          >
+            Experimentar Grátis
+          </a>
+          <a
+            class="downloadButton"
+            style="margin-top: 32px"
+            id="downloadButton"
+            style="text-decoration: none"
+            href="#ready"
+          >
+            Ver como funciona
+          </a>
+        </div>
+      </div>
+      <div class="WhyDiv" style="padding: 12em 0">
+        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)">
+          Por que escolher Colorashin?
+        </h1>
+        <p>A maneira mais facil de criar desenho para colorir</p>
+        <div class="advantagesGrid">
+          <div class="advantageCard">
+            <div class="advantageIcon">✨</div>
+            <h3>Transformação Instantânea</h3>
+            <p>
+              Tecnologia avançada que converte suas fotos em desenhos para
+              colorir em segundos.
+            </p>
+          </div>
+
+          <div class="advantageCard">
+            <div class="advantageIcon">📄</div>
+            <h3>PDF de Alta Qualidade</h3>
+            <p>
+              Baixe seus desenhos em PDF prontos para impressão com ótima
+              resolução.
+            </p>
+          </div>
+
+          <div class="advantageCard">
+            <div class="advantageIcon">🕒</div>
+            <h3>Histórico Completo</h3>
+            <p>
+              Acesse todas as suas transformações sempre que quiser, em um só
+              lugar.
+            </p>
+          </div>
+
+          <div class="advantageCard">
+            <div class="advantageIcon">🔒</div>
+            <h3>Seguro e Privado</h3>
+            <p>
+              Suas imagens são processadas com total segurança e privacidade.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="Funcionality" style="padding: 12em 0">
+        <h1>Como Funciona</h1>
+        <p>Três passos simples para criar seus desenhos personalizados</p>
+
+        <div class="stepsGrid">
+          <div class="stepItem">
+            <div class="stepCircle">
+              <span>1</span>
+            </div>
+            <h3>Envie sua Imagem</h3>
+            <p>Faça upload da imagem que deseja transformar em desenho.</p>
+          </div>
+
+          <div class="stepItem">
+            <div class="stepCircle">
+              <span>2</span>
+            </div>
+            <h3>Transformação Mágica</h3>
+            <p>Nossa IA converte sua foto em um lindo desenho para colorir.</p>
+          </div>
+
+          <div class="stepItem">
+            <div class="stepCircle">
+              <span>3</span>
+            </div>
+            <h3>Baixe e Imprima</h3>
+            <p>Baixe o PDF em alta qualidade e comece a colorir.</p>
+          </div>
+        </div>
+      </div>
+      <div class="readySection" id="ready" style="padding: 12em 0">
+        <h1>Pronto para começar?</h1>
+        <a
+          class="transformButton"
+          style="margin-top: 32px"
+          id="transformButton"
+          href="TransformImage.html"
+        >
+          Experimentar Grátis
+        </a>
+      </div>
+    </div>
+
+    <footer class="Footer">
+      <div class="LinkFooter">
+        <div>
+          <img
+            src="../image/icon.png"
+            width="30%"
+            class="iconFooter"
+            alt="Logo"
+          />
+        </div>
+        <div>
+          <h4 class="FooterTitle">Links Rápidos</h4>
+          <a href="InitialPage.html" class="FooterLink">Home</a>
+          <a href="About.html" class="FooterLink">About</a>
+          <a href="TransformImage.html" class="FooterLink">Transform Image</a>
+          <a href="TransformImage.html" class="FooterLink">Historico</a>
+          <a href="TransformImage.html" class="FooterLink">Download</a>
+        </div>
+        <div>
+          <h4 class="FooterTitle">Suporte</h4>
+          <a href="InitialPage.html" class="FooterLink">Ajuda</a>
+          <a href="About.html" class="FooterLink">Contato</a>
+          <h4 class="FooterTitle">Legal</h4>
+          <a href="InitialPage.html" class="FooterLink">Termo de uso</a>
+          <a href="About.html" class="FooterLink">Privacidade</a>
+        </div>
+      </div>
+      <div class="LineFooter"></div>
+      <p style="margin: 0">© 2026 Colorashin. Todos os direitos reservados.</p>
+    </footer>
+    <div
+      id="scrollBtn"
+      class="scroll-btn-container"
+      onclick="handleScrollAction()"
+    >
+      <svg class="progress-ring" width="50" height="50">
+        <circle
+          stroke="#e6e6e6"
+          stroke-width="4"
+          fill="transparent"
+          r="22"
+          cx="25"
+          cy="25"
+        />
+        <circle
+          class="progress-ring__circle"
+          stroke="#007e7a"
+          stroke-width="4"
+          fill="transparent"
+          r="22"
+          cx="25"
+          cy="25"
+        />
+      </svg>
+
+      <span id="scrollIcon" class="arrow-icon">⬇</span>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const loginBtn = document.getElementById("loginBtn");
+        const signupBtn = document.getElementById("signupBtn");
+        const modalOverlay = document.getElementById("modalOverlay");
+        const closeModal = document.getElementById("closeModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalForm = document.getElementById("modalForm");
+        const modalSwitch = document.getElementById("modalSwitch");
+
+        let isLoginMode = true;
+
+        // Função para abrir modal de Login
+        function openLogin() {
+          isLoginMode = true;
+          modalTitle.textContent = "Login";
+          modalForm.innerHTML = `
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Senha" required />
+          <button type="submit" class="modal-btn">Entrar</button>
+        `;
+          modalSwitch.innerHTML =
+            'Não tem conta? <span id="switchBtn">Registre-se</span>';
+          modalOverlay.classList.add("active");
+
+          // Re-adiciona o evento de switch
+          document
+            .getElementById("switchBtn")
+            .addEventListener("click", openSignup);
+        }
+
+        // Função para abrir modal de Cadastro
+        function openSignup() {
+          isLoginMode = false;
+          modalTitle.textContent = "Cadastro";
+          modalForm.innerHTML = `
+          <input type="text" placeholder="Nome" required />
+          <input type="email" placeholder="Email" required />
+          <input type="password" placeholder="Senha" required />
+          <button type="submit" class="modal-btn">Criar Conta</button>
+        `;
+          modalSwitch.innerHTML =
+            'Já tem conta? <span id="switchBtn">Login</span>';
+          modalOverlay.classList.add("active");
+
+          // Re-adiciona o evento de switch
+          document
+            .getElementById("switchBtn")
+            .addEventListener("click", openLogin);
+        }
+
+        // Função para fechar modal
+        function closeModalFunc() {
+          modalOverlay.classList.remove("active");
+        }
+
+        // Event listeners
+        loginBtn.addEventListener("click", openLogin);
+        signupBtn.addEventListener("click", openSignup);
+        closeModal.addEventListener("click", closeModalFunc);
+
+        // Fechar ao clicar fora do modal
+        modalOverlay.addEventListener("click", (e) => {
+          if (e.target === modalOverlay) {
+            closeModalFunc();
+          }
+        });
+
+        // Prevenir submit do formulário (para teste)
+        modalForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          alert(isLoginMode ? "Login realizado!" : "Cadastro realizado!");
+          closeModalFunc();
+        });
+      });
+    </script>
+    <script>
+      const circle = document.querySelector(".progress-ring__circle");
+      const radius = circle.r.baseVal.value;
+      const circumference = radius * 2 * Math.PI;
+      const scrollIcon = document.getElementById("scrollIcon");
+      const scrollBtn = document.getElementById("scrollBtn");
+
+      circle.style.strokeDasharray = `${circumference} ${circumference}`;
+      circle.style.strokeDashoffset = circumference;
+
+      function setProgress(percent) {
+        const offset = circumference - (percent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+      }
+
+      function onScroll() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+
+        let scrollPercent = (scrollTop / docHeight) * 100;
+
+        setProgress(scrollPercent);
+
+        if (scrollPercent < 50) {
+          scrollIcon.innerHTML = "⬇";
+          scrollIcon.style.transform = "translateY(0)";
+        } else {
+          scrollIcon.innerHTML = "⬆";
+          scrollIcon.style.transform = "translateY(-2px)";
+        }
+      }
+
+      // Função de clique
+      function handleScrollAction() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+
+        if (scrollTop < 100) {
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth",
+          });
+        } else {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      }
+
+      window.addEventListener("scroll", onScroll);
+
+      onScroll();
+    </script>
+
+    <script>
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector(".NavBar");
+
+        // Se o scroll for maior que 50px, adiciona a classe, senão remove
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>
