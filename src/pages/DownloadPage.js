@@ -1,136 +1,179 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-import { Link } from "react-router-dom";
 import ArrowNavButton from "../components/ArrowNavButton";
+import api from "../services/api";
 
 export default function DownloadPage() {
+  const { bookId: paramBookId } = useParams();
+  const [searchParams] = useSearchParams();
+  const queryBookId = searchParams.get("bookId");
+  const bookId = paramBookId || queryBookId;
+
+  const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!bookId) {
+      setLoading(false);
+      setError("Nenhum ID de livro fornecido.");
+      return;
+    }
+
+    let blobUrl = null;
+
+    const fetchPdf = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await api.get(`/api/books/${bookId}/download-url`, {
+          responseType: "blob",
+        });
+
+        const blob = new Blob([response.data], { type: "application/pdf" });
+        blobUrl = URL.createObjectURL(blob);
+        setPdfBlobUrl(blobUrl);
+      } catch (err) {
+        console.error("[Download] Failed:", err);
+        if (err.response?.status === 404) {
+          setError("Livro não encontrado.");
+        } else if (err.response?.status === 401) {
+          setError("Sessão expirada. Faça login novamente.");
+        } else {
+          setError("Não foi possível carregar o PDF. Tente novamente.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPdf();
+
+    // Cleanup blob URL on unmount
+    return () => {
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+    };
+  }, [bookId]);
+
+  const handleDownload = () => {
+    if (!pdfBlobUrl) return;
+    const link = document.createElement("a");
+    link.href = pdfBlobUrl;
+    link.download = `livro-colorir-${bookId}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleOpenNewTab = () => {
+    if (!pdfBlobUrl) return;
+    window.open(pdfBlobUrl, "_blank");
+  };
+
+  if (!bookId) {
+    return (
+      <>
+        <NavBar />
+        <div className="min-h-screen flex flex-col items-center justify-center gap-4 m-auto">
+          <div className="text-5xl">⚠️</div>
+          <h2 className="text-brandPink font-chango m-0 p-0 text-2xl">
+            Nenhum livro selecionado
+          </h2>
+          <Link
+            to="/account"
+            className="bg-brandPink text-white font-sans border-none py-3 px-6 rounded-lg text-base font-bold no-underline hover:bg-brandPinkDark transition-all duration-300"
+          >
+            Voltar para Minha Conta
+          </Link>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <NavBar />
       <div className="min-h-screen flex flex-col justify-start items-center gap-8 py-10 mt-[60px] m-auto">
+        {/* Header */}
         <div className="w-full flex px-8 items-center justify-evenly mt-20">
           <div>
             <h2 className="text-brandPink font-chango m-0 p-0 text-2xl">
-              Pedido #ORD-001
+              📖 Livro #{bookId}
             </h2>
             <p className="mt-2 text-mainText">
-              Acesse e baixe seus desenhos em PDF
+              {loading
+                ? "Carregando seu PDF..."
+                : error
+                  ? error
+                  : "Seu livro está pronto!"}
             </p>
           </div>
-          <div>
-            <Link to="/transform">
-              <button
-                className="bg-transparent text-mainText border-2 border-mainText py-2 px-4 rounded-md cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg text-base"
-                id="logoutBtn"
-              >
-                Nova Requisição
+          <div className="flex gap-3">
+            <Link to="/account">
+              <button className="bg-transparent text-mainText border-2 border-mainText py-2 px-4 rounded-md cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg text-base">
+                Meus Pedidos
               </button>
             </Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-12 max-w-[900px] w-full px-5 mx-auto">
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">Total de paginas</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">15</h3>
-            </div>
-            <div className="text-2xl">🧾</div>
+        {/* Loading */}
+        {loading && (
+          <div className="flex flex-col items-center gap-4 mt-8">
+            <div className="w-12 h-12 border-4 border-[#ccc] border-t-brandPink rounded-full animate-spin" />
+            <p className="text-sm text-[#666] font-sans">
+              Baixando PDF do servidor...
+            </p>
           </div>
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">preço do documento</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">
-                R$ 9,90
-              </h3>
-            </div>
-            <div className="text-2xl">💰</div>
-          </div>
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">status do documento</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">
-                Concluído
-              </h3>
-            </div>
-            <div className="text-2xl">✅</div>
-          </div>
-        </div>
+        )}
 
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-12 max-w-[900px] w-full px-5 mx-auto">
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-start w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default flex-col">
-            <div className="text-start w-full">
-              <div className="relative inline-block w-full">
-                <span className="absolute top-2.5 right-2.5 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-[#fddde6] text-[#f06292]">
-                  Book
-                </span>
-                <img
-                  src="/assets/image/jashiHeadIcon.png"
-                  alt="Sample"
-                  className="w-full rounded-lg block"
-                />
-              </div>
-              <p className="font-bold mt-3 text-mainText">
-                Desenho para Colorir - Paisagem
-              </p>
-              <p className="text-[#666] text-sm mt-1">
-                2.4 MB • 03 de jan. de 2025
-              </p>
+        {/* Error */}
+        {!loading && error && (
+          <div className="flex flex-col items-center gap-4 mt-8">
+            <div className="text-5xl">⚠️</div>
+            <p className="text-red-600 font-sans text-base">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-brandPink text-white font-sans border-none py-3 px-6 rounded-lg cursor-pointer text-base font-bold hover:bg-brandPinkDark transition-all duration-300"
+            >
+              🔄 Tentar Novamente
+            </button>
+          </div>
+        )}
 
-              <div className="flex items-center gap-2 mt-4 w-full">
-                <a
-                  href="#download"
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer no-underline transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow w-4/5"
-                >
-                  💹 Baixar PDF
-                </a>
-                <button className="flex items-center justify-center gap-2 p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 font-sans border border-[#ddd] bg-white text-[#333] hover:bg-[#f5f5f5] w-1/10">
-                  📃
-                </button>
-                <button className="flex items-center justify-center gap-2 p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 font-sans border border-[#ddd] bg-white text-[#333] hover:bg-[#f5f5f5] w-1/10">
-                  🔗
-                </button>
-              </div>
+        {/* PDF Ready */}
+        {!loading && !error && pdfBlobUrl && (
+          <div className="max-w-[900px] w-full px-5 mx-auto flex flex-col gap-6">
+            {/* Action Buttons */}
+            <div className="flex gap-3 justify-center flex-wrap">
+              <button
+                onClick={handleDownload}
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow hover:-translate-y-0.5"
+              >
+                💾 Baixar PDF
+              </button>
+              <button
+                onClick={handleOpenNewTab}
+                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 font-sans border-2 border-brandPink bg-white text-brandPink hover:bg-brandPink hover:text-white hover:-translate-y-0.5"
+              >
+                🔗 Abrir em nova aba
+              </button>
+            </div>
+
+            {/* Embedded PDF Viewer */}
+            <div className="w-full bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.3)] overflow-hidden">
+              <iframe
+                src={pdfBlobUrl}
+                title={`Livro de Colorir #${bookId}`}
+                className="w-full border-none"
+                style={{ height: "80vh" }}
+              />
             </div>
           </div>
-
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-start w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default flex-col">
-            <div className="text-start w-full">
-              <div className="relative inline-block w-full">
-                <span className="absolute top-2.5 right-2.5 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-[#fddde6] text-[#f06292]">
-                  Paginas
-                </span>
-                <img
-                  src="/assets/image/jashiHeadIcon.png"
-                  alt="Sample"
-                  className="w-full rounded-lg block"
-                />
-              </div>
-              <p className="font-bold mt-3 text-mainText">
-                Desenho para Colorir - Paisagem
-              </p>
-              <p className="text-[#666] text-sm mt-1">
-                2.4 MB • 03 de jan. de 2025
-              </p>
-
-              <div className="flex items-center gap-2 mt-4 w-full">
-                <a
-                  href="#download"
-                  className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer no-underline transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow w-4/5"
-                >
-                  💹 Baixar PDF
-                </a>
-                <button className="flex items-center justify-center gap-2 p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 font-sans border border-[#ddd] bg-white text-[#333] hover:bg-[#f5f5f5] w-1/10">
-                  📃
-                </button>
-                <button className="flex items-center justify-center gap-2 p-2 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 font-sans border border-[#ddd] bg-white text-[#333] hover:bg-[#f5f5f5] w-1/10">
-                  🔗
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
       <Footer />
       <ArrowNavButton />

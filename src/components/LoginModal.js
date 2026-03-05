@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export default function LoginModal({
   isOpen,
@@ -6,12 +7,41 @@ export default function LoginModal({
   isLoginMode,
   setIsLoginMode,
 }) {
+  const { login, register, isLoading, error, clearError } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [localMessage, setLocalMessage] = useState(null);
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(isLoginMode ? "Login realizado!" : "Cadastro realizado!");
-    onClose();
+    clearError();
+    setLocalMessage(null);
+
+    if (isLoginMode) {
+      const result = await login({ email, password });
+      if (result.success) {
+        setEmail("");
+        setPassword("");
+        onClose();
+      }
+    } else {
+      const result = await register({ email, password });
+      if (result.success) {
+        setLocalMessage("Conta criada com sucesso!");
+        setEmail("");
+        setPassword("");
+        // Auto-close after short delay if registration also logs in
+        setTimeout(() => onClose(), 1200);
+      }
+    }
+  };
+
+  const handleToggleMode = () => {
+    clearError();
+    setLocalMessage(null);
+    setIsLoginMode(!isLoginMode);
   };
 
   return (
@@ -31,38 +61,69 @@ export default function LoginModal({
         <h2 className="font-chango text-brandPink m-0 p-0 mb-5 text-[28px]">
           {isLoginMode ? "Login" : "Cadastro"}
         </h2>
+
+        {/* Error message */}
+        {error && (
+          <div className="bg-red-50 border border-red-300 text-red-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left">
+            ⚠️ {error}
+          </div>
+        )}
+
+        {/* Success message */}
+        {localMessage && (
+          <div className="bg-green-50 border border-green-300 text-green-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left">
+            ✅ {localMessage}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
-          {!isLoginMode && (
-            <input
-              type="text"
-              placeholder="Nome"
-              required
-              className="w-full p-3 mb-3 rounded-md border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink"
-            />
-          )}
           <input
             type="email"
             placeholder="Email"
             required
-            className="w-full p-3 mb-3 rounded-md border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+            className="w-full p-3 mb-3 rounded-md border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink disabled:opacity-50"
           />
           <input
             type="password"
             placeholder="Senha"
             required
-            className="w-full p-3 mb-3 rounded-md border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
+            className="w-full p-3 mb-3 rounded-md border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink disabled:opacity-50"
           />
           <button
             type="submit"
-            className="w-full bg-brandPink text-white border-none rounded-md p-3 font-sans font-bold text-base cursor-pointer transition-all duration-300 hover:bg-brandPinkDark hover:-translate-y-0.5"
+            disabled={isLoading}
+            className="w-full bg-brandPink text-white border-none rounded-md p-3 font-sans font-bold text-base cursor-pointer transition-all duration-300 hover:bg-brandPinkDark hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
           >
-            {isLoginMode ? "Entrar" : "Criar Conta"}
+            {isLoading ? (
+              <span className="inline-flex items-center gap-1">
+                Carregando
+                <span className="inline-flex ml-0.5">
+                  <span className="animate-bounce [animation-delay:-0.3s]">
+                    .
+                  </span>
+                  <span className="animate-bounce [animation-delay:-0.15s]">
+                    .
+                  </span>
+                  <span className="animate-bounce">.</span>
+                </span>
+              </span>
+            ) : isLoginMode ? (
+              "Entrar"
+            ) : (
+              "Criar Conta"
+            )}
           </button>
         </form>
         <p className="mt-[15px] text-sm font-sans">
           {isLoginMode ? "Não tem conta? " : "Já tem conta? "}
           <span
-            onClick={() => setIsLoginMode(!isLoginMode)}
+            onClick={handleToggleMode}
             className="text-brandPink cursor-pointer font-bold underline hover:text-brandPinkDark"
           >
             {isLoginMode ? "Registre-se" : "Login"}

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
+import { useAuth } from "../context/AuthContext";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
@@ -24,6 +27,11 @@ export default function NavBar() {
   const openSignup = () => {
     setIsLoginMode(false);
     setModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -59,18 +67,40 @@ export default function NavBar() {
         </Link>
 
         <div className="flex items-center gap-2.5 mx-5">
-          <button
-            className="bg-brandPink text-white border-none py-2 px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark"
-            onClick={openLogin}
-          >
-            Login
-          </button>
-          <button
-            className="bg-transparent text-mainText border-2 border-mainText py-1.5 px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg"
-            onClick={openSignup}
-          >
-            Registre-se
-          </button>
+          {isAuthenticated ? (
+            <>
+              <span className="text-sm font-sans text-mainText font-semibold truncate max-w-[180px]">
+                {user?.email}
+              </span>
+              <Link
+                to="/account"
+                className="bg-transparent text-mainText border-2 border-mainText py-1.5 px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg no-underline text-sm"
+              >
+                Minha Conta
+              </Link>
+              <button
+                className="bg-brandPink text-white border-none py-2 px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark text-sm"
+                onClick={handleLogout}
+              >
+                Sair
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="bg-brandPink text-white border-none py-2 px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark"
+                onClick={openLogin}
+              >
+                Login
+              </button>
+              <button
+                className="bg-transparent text-mainText border-2 border-mainText py-1.5 px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg"
+                onClick={openSignup}
+              >
+                Registre-se
+              </button>
+            </>
+          )}
         </div>
       </header>
 
