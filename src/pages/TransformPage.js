@@ -9,7 +9,6 @@ import { useBookUpload } from "../hooks/useBookUpload";
 export default function TransformPage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
   const { isAuthenticated, user } = useAuth();
   const { status, uploadProgress, error, uploadAndCheckout, reset } =
     useBookUpload();
@@ -37,20 +36,21 @@ export default function TransformPage() {
       return;
     }
 
-    if (selectedFiles.length === 0 || !title.trim() || !price) {
+    if (selectedFiles.length === 0 || !title.trim()) {
       return;
     }
+
+    const calculatedPrice = selectedFiles.length * 0.5;
 
     await uploadAndCheckout({
       userId: user.userId,
       title: title.trim(),
-      price: parseFloat(price),
+      price: calculatedPrice,
       files: selectedFiles.map((f) => f.file),
     });
   };
 
-  const isFormValid =
-    selectedFiles.length > 0 && title.trim() && price && parseFloat(price) > 0;
+  const isFormValid = selectedFiles.length > 0 && title.trim();
   const isDisabled = status !== "idle" && status !== "error";
 
   // Status messages
@@ -89,18 +89,13 @@ export default function TransformPage() {
             </div>
             <div className="w-full sm:w-[180px]">
               <label className="block text-sm font-bold text-[#333] mb-1.5 font-sans">
-                Preço (R$)
+                Preço Calculado (R$)
               </label>
-              <input
-                type="number"
-                placeholder="15.50"
-                min="0.01"
-                step="0.01"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                disabled={isDisabled}
-                className="w-full p-3 rounded-lg border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink transition-colors duration-200 disabled:opacity-50"
-              />
+              <div className="w-full p-3 rounded-lg border-2 border-transparent bg-gray-100 font-sans text-sm font-bold text-gray-700 h-[48px] flex items-center">
+                {selectedFiles.length > 0
+                  ? `R$ ${(selectedFiles.length * 0.5).toFixed(2).replace(".", ",")}`
+                  : "R$ 0,00"}
+              </div>
             </div>
           </div>
         </div>

@@ -16,6 +16,8 @@ export default function MyAccountPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [payingBookId, setPayingBookId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -28,8 +30,10 @@ export default function MyAccountPage() {
       setError(null);
       try {
         const data = await getUserBooksByUserId(user.userId);
-        const booksList = Array.isArray(data) ? data : [];
+        let booksList = Array.isArray(data) ? data : [];
+        booksList.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
         setBooks(booksList);
+        setCurrentPage(1);
       } catch (err) {
         console.error("Failed to fetch books:", err);
         setError("Não foi possível carregar seus pedidos.");
@@ -43,6 +47,12 @@ export default function MyAccountPage() {
 
   const completedBooks = books.filter((b) => b.statusPay === "PAID");
   const pendingBooks = books.filter((b) => b.statusPay !== "PAID");
+
+  const totalPagesCount = Math.ceil(books.length / itemsPerPage);
+  const currentBooks = books.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handlePay = async (bookId) => {
     setPayingBookId(bookId);
@@ -93,13 +103,14 @@ export default function MyAccountPage() {
 
   const handleOrderClick = (book) => {
     if (book.statusPay === "PAID") {
-      navigate(`/download/${book.id}`);
+      navigate(`/download/${book.id}`, { state: { bookTitle: book.title } });
     }
   };
 
   return (
     <>
       <NavBar />
+      
       <div className="min-h-screen flex flex-col justify-start items-center gap-8 py-10 pt-[60px] m-auto">
         <div className="w-full flex px-8 items-center justify-evenly mt-40">
           <div>
@@ -188,12 +199,12 @@ export default function MyAccountPage() {
 
           {!loading && !error && books.length > 0 && (
             <div className="flex flex-col gap-5 w-full">
-              {books.map((book) => {
+              {currentBooks.map((book) => {
                 const isPaid = book.statusPay === "PAID";
                 const isPayingThis = payingBookId === book.id;
 
                 return (
-                  <div
+                  <button
                     key={book.id}
                     onClick={() => handleOrderClick(book)}
                     className={`bg-white border rounded-2xl p-5 flex flex-col sm:flex-row items-start gap-5 relative shadow-[0_2px_5px_rgba(0,0,0,0.02)] w-full transition-all duration-200 ${
@@ -222,18 +233,20 @@ export default function MyAccountPage() {
                         <span>📅 {formatDate(book.createAt)}</span>
                         <span>
                           📄 {book.totalPages} página
-                          {book.totalPages !== 1 ? "s" : ""}
+                          {book.totalPages === 1 ? "" : "s"}
                         </span>
-                        {book.price != null && (
+                        {book.totalPages != null && (
                           <span className="font-semibold text-[#333]">
-                            {formatPrice(book.price)}
+                            {formatPrice(book.totalPages * 0.5)}
                           </span>
                         )}
                       </div>
+                      
                       <div className="flex items-center gap-2.5 mt-1.5 w-full">
                         {isPaid ? (
                           <Link
                             to={`/download/${book.id}`}
+                            state={{ bookTitle: book.title }}
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer no-underline transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow hover:-translate-y-0.5"
                           >
@@ -250,7 +263,7 @@ export default function MyAccountPage() {
                           >
                             {isPayingThis ? (
                               <>
-                                Gerando pagamento
+                                Gerando pagamento{' '}
                                 <span className="inline-flex ml-0.5">
                                   <span className="animate-bounce [animation-delay:-0.3s]">
                                     .
@@ -268,9 +281,34 @@ export default function MyAccountPage() {
                         )}
                       </div>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
+
+              {/* Pagination Controls */}
+              {totalPagesCount > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-8">
+                  <button
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg border border-[#ddd] bg-white text-[#333] disabled:opacity-50 disabled:cursor-not-allowed font-sans cursor-pointer hover:bg-gray-50 transition-colors font-bold text-sm"
+                  >
+                    Anterior
+                  </button>
+                  <span className="font-sans text-sm text-[#777] font-semibold">
+                    Página {currentPage} de {totalPagesCount}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(totalPagesCount, p + 1))
+                    }
+                    disabled={currentPage === totalPagesCount}
+                    className="px-4 py-2 rounded-lg border border-[#ddd] bg-white text-[#333] disabled:opacity-50 disabled:cursor-not-allowed font-sans cursor-pointer hover:bg-gray-50 transition-colors font-bold text-sm"
+                  >
+                    Próxima
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

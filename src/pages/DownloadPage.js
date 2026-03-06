@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import ArrowNavButton from "../components/ArrowNavButton";
 import api from "../services/api";
+import { getBookById } from "../services/bookService";
 
 export default function DownloadPage() {
   const { bookId: paramBookId } = useParams();
@@ -12,6 +13,7 @@ export default function DownloadPage() {
   const bookId = paramBookId || queryBookId;
 
   const [pdfBlobUrl, setPdfBlobUrl] = useState(null);
+  const [bookData, setBookData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -28,6 +30,14 @@ export default function DownloadPage() {
       setLoading(true);
       setError(null);
       try {
+        // Fetch book metadata first
+        const metadata = await getBookById(bookId);
+        setBookData({
+          title: metadata.title || `Livro-${bookId}`,
+          status: metadata.statusPay,
+        });
+
+        // Then fetch the PDF blob
         const response = await api.get(`/api/books/${bookId}/download-url`, {
           responseType: "blob",
         });
@@ -59,12 +69,26 @@ export default function DownloadPage() {
 
   const handleDownload = () => {
     if (!pdfBlobUrl) return;
+
+    const rawTitle = bookData?.title || `livro-colorir-${bookId}`;
+
+    // Sanitize the title to make it a valid filename
+    const safeTitle = rawTitle
+      .toLowerCase()
+      .replaceAll(/[^a-z0-9]/g, "-") // replace non-alphanumeric with -
+      .replaceAll(/-+/g, "-") // replace multiple - with single -
+      .replaceAll(/(^-+|-+$)/g, ""); // trim - from start and end
+
+    const filename = safeTitle
+      ? `${safeTitle}.pdf`
+      : `livro-colorir-${bookId}.pdf`;
+
     const link = document.createElement("a");
     link.href = pdfBlobUrl;
-    link.download = `livro-colorir-${bookId}.pdf`;
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    link.remove();
   };
 
   const handleOpenNewTab = () => {
@@ -101,7 +125,7 @@ export default function DownloadPage() {
         <div className="w-full flex px-8 items-center justify-evenly mt-20">
           <div>
             <h2 className="text-brandPink font-chango m-0 p-0 text-2xl">
-              📖 Livro #{bookId}
+              📖 {bookData?.title || `Livro #${bookId}`}
             </h2>
             <p className="mt-2 text-mainText">
               {loading

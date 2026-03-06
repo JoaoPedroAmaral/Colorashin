@@ -63,3 +63,13 @@ export async function getUserBooksByUserId(userId) {
   const { data } = await api.get(`/api/books/user/${userId}`);
   return data;
 }
+
+/**
+ * GET /api/books/:bookId — Retrieve a specific book by its ID
+ * @param {string|number} bookId
+ * @returns {{ id, userId, title, createAt, statusPay, totalPages, price }}
+ */
+export async function getBookById(bookId) {
+  const { data } = await api.get(`/api/books/${bookId}`);
+  return data;
+}
