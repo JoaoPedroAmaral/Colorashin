@@ -5,20 +5,16 @@ const api = axios.create({
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
-    // Required for ngrok free URLs — without this, ngrok returns
-    // an HTML interstitial page instead of your API response
     "ngrok-skip-browser-warning": "true",
   },
 });
 
-// ── Request Interceptor: inject JWT token ──────────────────────────
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jashincolor_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // Debug: remove this after confirming it works
     console.log(
       `[API] ${config.method?.toUpperCase()} ${config.url}`,
       token ? "✅ Token attached" : "⚠️ No token",
@@ -28,7 +24,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-// ── Response Interceptor: handle 401 globally ──────────────────────
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -40,7 +35,6 @@ api.interceptors.response.use(
       localStorage.removeItem("jashincolor_token");
       localStorage.removeItem("jashincolor_user");
 
-      // Dispatch a custom event so AuthContext can react
       window.dispatchEvent(new CustomEvent("auth:expired"));
     }
     return Promise.reject(error);
