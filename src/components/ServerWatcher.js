@@ -71,8 +71,8 @@ export default function ServerWatcher() {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -50, opacity: 0 }}
-        style={{ zIndex: 1001 }}
-        className="fixed bottom-4 -translate-x-1/2 z-50 flex items-center shadow-lg rounded-xl px-4 py-3 bg-white border border-[#EBEBEB]"
+        style={{ zIndex: 10001 }}
+        className="fixed bt-4 -translate-x-1/2 z-50 flex items-center shadow-lg rounded-xl px-4 py-3 bg-white border border-[#EBEBEB]"
       >
         {status === "waking" && (
           <div className="flex items-center gap-3">

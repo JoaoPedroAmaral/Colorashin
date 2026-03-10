@@ -141,3 +141,18 @@ h6 {
   color: #00e676;
   text-shadow: 2px 1px 1px rgba(0, 0, 0, 1);
 }
+.bt-1{
+  bottom: 0.25rem;
+}
+
+.bt-2{
+  bottom: 1rem;
+}
+
+.bt-3{
+  bottom: 1.5rem;
+}
+
+.bt-4{
+  bottom: 2rem;
+}
