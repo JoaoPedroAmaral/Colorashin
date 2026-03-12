@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import ArrowNavButton from "../components/ArrowNavButton";
+import LoginModal from "../components/LoginModal";
 import { useAuth } from "../context/AuthContext";
 import { useBookUpload } from "../hooks/useBookUpload";
+import { PlusCircle, AlertTriangle } from "lucide-react";
 
 export default function TransformPage() {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -12,7 +14,15 @@ export default function TransformPage() {
   const { isAuthenticated, user } = useAuth();
   const { status, uploadProgress, error, uploadAndCheckout, reset } =
     useBookUpload();
-  const navigate = useNavigate();
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isLoginMode, setIsLoginMode] = useState(true);
+
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+    }
+  }, [isAuthenticated]);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -40,7 +50,7 @@ export default function TransformPage() {
       return;
     }
 
-    const calculatedPrice = selectedFiles.length * 0.5;
+    const calculatedPrice = selectedFiles.length * 1;
 
     await uploadAndCheckout({
       userId: user.userId,
@@ -51,7 +61,7 @@ export default function TransformPage() {
   };
 
   const isFormValid = selectedFiles.length > 0 && title.trim();
-  const isDisabled = status !== "idle" && status !== "error";
+  const isDisabled = !isAuthenticated || (status !== "idle" && status !== "error");
 
   // Status messages
   const statusMessages = {
@@ -63,7 +73,7 @@ export default function TransformPage() {
   return (
     <>
       <NavBar />
-      <div className="min-h-[calc(100vh-280px)] flex flex-col items-center pt-[80px] p-10 m-auto">
+      <div className="min-h-[calc(100vh-280px)] flex flex-col items-center pt-[80px] px-4 sm:px-10 pb-10 m-auto text-center sm:text-left">
         <h1 className="text-brandPink font-chango m-0 p-0">
           Crie seu Livro de Colorir
         </h1>
@@ -73,8 +83,8 @@ export default function TransformPage() {
 
         {/* Title Input */}
         <div className="w-full max-w-[700px] mt-8 flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="flex-1 text-left">
               <label className="block text-sm font-bold text-[#333] mb-1.5 font-sans">
                 Título do Livro
               </label>
@@ -87,13 +97,13 @@ export default function TransformPage() {
                 className="w-full p-3 rounded-lg border-2 border-[#ccc] font-sans text-sm focus:outline-none focus:border-brandPink transition-colors duration-200 disabled:opacity-50"
               />
             </div>
-            <div className="w-full sm:w-[180px]">
+            <div className="w-full sm:w-[180px] text-left">
               <label className="block text-sm font-bold text-[#333] mb-1.5 font-sans">
                 Preço Calculado (R$)
               </label>
               <div className="w-full p-3 rounded-lg border-2 border-transparent bg-gray-100 font-sans text-sm font-bold text-gray-700 h-[48px] flex items-center">
                 {selectedFiles.length > 0
-                  ? `R$ ${(selectedFiles.length * 0.5).toFixed(2).replace(".", ",")}`
+                  ? `R$ ${(selectedFiles.length * 1).toFixed(2).replace(".", ",")}`
                   : "R$ 0,00"}
               </div>
             </div>
@@ -102,10 +112,12 @@ export default function TransformPage() {
 
         {/* File Upload Area */}
         <label
-          className={`bg-[#f0f0f0] border-4 border-dashed border-[#ccc] p-[50px] w-full max-w-[700px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-center transition-all duration-300 font-chango hover:border-brandPink cursor-pointer relative mt-4 rounded-xl ${isDisabled ? "opacity-50 pointer-events-none" : ""}`}
+          className={`bg-[#f0f0f0] border-4 border-dashed border-[#ccc] p-5 sm:p-[50px] w-full max-w-[700px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-center transition-all duration-300 font-chango hover:border-brandPink cursor-pointer relative mt-4 rounded-xl flex flex-col items-center justify-center ${isDisabled ? "opacity-50 pointer-events-none" : ""}`}
           htmlFor="fileInput"
         >
-          <div className="text-lg">📷 Escolher imagens</div>
+          <div className="text-base sm:text-lg flex items-center gap-2">
+            <PlusCircle size={24} className="text-brandPink" /> Escolher imagens
+          </div>
           <p className="mt-2 text-sm text-[#666] font-sans font-normal">
             Selecione as páginas do seu livro de colorir
           </p>
@@ -179,7 +191,9 @@ export default function TransformPage() {
         {/* Error Message */}
         {error && (
           <div className="mt-4 px-6 py-3 bg-red-50 border border-red-300 rounded-lg text-red-700 font-sans text-sm max-w-[700px] w-full">
-            <p className="m-0 font-semibold">⚠️ {error}</p>
+            <p className="m-0 font-semibold flex items-center gap-2">
+              <AlertTriangle size={18} /> {error}
+            </p>
             <button
               onClick={reset}
               className="mt-2 text-sm underline text-red-600 hover:text-red-800 cursor-pointer bg-transparent border-none font-sans"
@@ -191,15 +205,17 @@ export default function TransformPage() {
 
         {/* Submit Button */}
         {!isAuthenticated ? (
-          <p className="mt-8 text-sm text-[#555] font-sans">
-            ⚠️ Você precisa estar logado para criar um livro.{" "}
-            <span
-              onClick={() => navigate("/")}
-              className="text-brandPink font-bold cursor-pointer underline hover:text-brandPinkDark"
+          <div className="mt-8 flex flex-col items-center">
+            <p className="text-sm text-[#555] font-sans flex items-center gap-2">
+              <AlertTriangle size={16} className="text-amber-500" /> Você precisa estar logado para criar um livro.{" "}
+            </p>
+            <button
+              onClick={() => setShowLoginModal(true)}
+              className="mt-4 bg-brandPink text-white font-sans border-none py-3 px-8 rounded-lg cursor-pointer text-base font-bold no-underline hover:bg-brandPinkDark transition-all duration-300 hover:-translate-y-0.5"
             >
-              Faça login
-            </span>
-          </p>
+              Fazer Login
+            </button>
+          </div>
         ) : (
           <button
             className="bg-brandPink text-white font-sans border-none py-3 px-8 rounded-lg cursor-pointer text-base font-bold no-underline inline-block hover:bg-brandPinkDark mt-8 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
@@ -217,6 +233,16 @@ export default function TransformPage() {
       </div>
       <Footer />
       <ArrowNavButton />
+
+      {/* Login Modal Overlay */}
+      {showLoginModal && (
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          isLoginMode={isLoginMode}
+          setIsLoginMode={setIsLoginMode}
+        />
+      )}
     </>
   );
 }

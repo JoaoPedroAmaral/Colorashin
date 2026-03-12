@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import ArrowNavButton from "../components/ArrowNavButton";
 import api from "../services/api";
 import { getBookById } from "../services/bookService";
+import { AlertTriangle, BookOpen, RefreshCw, Download, ExternalLink } from "lucide-react";
 
 export default function DownloadPage() {
   const { bookId: paramBookId } = useParams();
@@ -101,7 +102,9 @@ export default function DownloadPage() {
       <>
         <NavBar />
         <div className="min-h-screen flex flex-col items-center justify-center gap-4 m-auto">
-          <div className="text-5xl">⚠️</div>
+          <div className="text-5xl">
+            <AlertTriangle size={64} />
+          </div>
           <h2 className="text-brandPink font-chango m-0 p-0 text-2xl">
             Nenhum livro selecionado
           </h2>
@@ -122,11 +125,11 @@ export default function DownloadPage() {
       <NavBar />
       <div className="min-h-screen flex flex-col justify-start items-center gap-8 py-10 mt-[60px] m-auto">
         {/* Header */}
-        <div className="w-full flex px-8 items-center justify-evenly mt-20">
-          <div>
-            <h2 className="text-brandPink font-chango m-0 p-0 text-2xl">
-              📖 {bookData?.title || `Livro #${bookId}`}
-            </h2>
+        <div className="w-full flex px-4 md:px-8 flex-col md:flex-row items-center justify-between mt-10 md:mt-20 max-w-[900px]">
+          <div className="text-center md:text-left mb-6 md:mb-0">
+            <h1 className="text-brandPink font-chango text-2xl m-0 p-0 flex items-center justify-center md:justify-start gap-3">
+              <BookOpen size={28} /> {bookData?.title || `Livro #${bookId}`}
+            </h1>
             <p className="mt-2 text-mainText">
               {loading
                 ? "Carregando seu PDF..."
@@ -157,13 +160,15 @@ export default function DownloadPage() {
         {/* Error */}
         {!loading && error && (
           <div className="flex flex-col items-center gap-4 mt-8">
-            <div className="text-5xl">⚠️</div>
-            <p className="text-red-600 font-sans text-base">{error}</p>
+            <div className="flex justify-center mb-4 text-amber-500">
+              <AlertTriangle size={64} />
+            </div>
+            <h1 className="text-red-500 font-chango text-3xl m-0 p-0">{error}</h1>
             <button
               onClick={() => window.location.reload()}
               className="bg-brandPink text-white font-sans border-none py-3 px-6 rounded-lg cursor-pointer text-base font-bold hover:bg-brandPinkDark transition-all duration-300"
             >
-              🔄 Tentar Novamente
+              <RefreshCw size={20} className="inline-block mr-2" /> Tentar Novamente
             </button>
           </div>
         )}
@@ -175,15 +180,15 @@ export default function DownloadPage() {
             <div className="flex gap-3 justify-center flex-wrap">
               <button
                 onClick={handleDownload}
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow hover:-translate-y-0.5"
+                className="bg-brandPink text-white border-none py-2.5 px-6 rounded-lg cursor-pointer font-bold font-sans hover:bg-brandPinkDark hover:-translate-y-0.5 transition-all duration-300 w-full md:w-auto shadow-[0_4px_10px_rgba(255,64,129,0.3)] flex items-center justify-center gap-2"
               >
-                💾 Baixar PDF
+                <Download size={20} /> Baixar PDF
               </button>
               <button
                 onClick={handleOpenNewTab}
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-base font-semibold cursor-pointer transition-all duration-200 font-sans border-2 border-brandPink bg-white text-brandPink hover:bg-brandPink hover:text-white hover:-translate-y-0.5"
+                className="bg-transparent text-mainText border-2 border-mainText py-2.5 px-6 rounded-lg cursor-pointer font-bold font-sans hover:bg-[#f0f0f0] transition-colors duration-300 w-full md:w-auto flex items-center justify-center gap-2"
               >
-                🔗 Abrir em nova aba
+                <ExternalLink size={20} /> Abrir em nova aba
               </button>
             </div>
 

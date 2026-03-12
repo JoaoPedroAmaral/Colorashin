@@ -16,8 +16,9 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     console.log(
-      `[API] ${config.method?.toUpperCase()} ${config.url}`,
-      token ? "✅ Token attached" : "⚠️ No token",
+      "Intercepting request:",
+      config.url,
+      token ? "Token attached" : "No token",
     );
     return config;
   },

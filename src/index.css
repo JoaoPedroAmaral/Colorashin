@@ -99,6 +99,33 @@ h6 {
   padding: 0;
 }
 
+/* Disable text selection on UI chrome — keep p, input, textarea selectable */
+h1, h2, h3, h4, h5, h6,
+button,
+label,
+nav,
+header,
+footer,
+a,
+span,
+img,
+svg {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Re-enable selection on content that makes sense to copy */
+p,
+input,
+textarea,
+pre,
+code,
+td,
+th {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 .colorashin span:nth-child(1) {
   color: #ffd700;
   text-shadow: 2px 1px 1px rgba(0, 0, 0, 1);

@@ -10,6 +10,7 @@ const TransformPage = lazy(() => import("./pages/TransformPage"));
 const DownloadPage = lazy(() => import("./pages/DownloadPage"));
 const MyAccountPage = lazy(() => import("./pages/MyAccountPage"));
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
 
 function App() {
   return (
@@ -30,8 +31,8 @@ function App() {
             <Route path="/download/:bookId" element={<DownloadPage />} />
             <Route path="/payment-success" element={<PaymentSuccessPage />} />
             <Route path="/account" element={<MyAccountPage />} />
+            <Route path="/about" element={<AboutPage />} />
             {/* Placeholder for remaining links */}
-            <Route path="/about" element={<div>About</div>} />
             <Route path="/help" element={<div>Ajuda</div>} />
             <Route path="/contact" element={<div>Contato</div>} />
             <Route path="/terms" element={<div>Termos de Uso</div>} />

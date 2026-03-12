@@ -3,7 +3,9 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowNavButton from "../components/ArrowNavButton";
+import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
+import { CheckCircle, CreditCard, AlertTriangle, Library, BookOpen, Book, Calendar, FileText, Download } from "lucide-react";
 import {
   getUserBooksByUserId,
   createCheckoutPreference,
@@ -89,16 +91,17 @@ export default function MyAccountPage() {
   const getStatusBadge = (statusPay) => {
     if (statusPay === "PAID") {
       return (
-        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#e8f5e9] text-[#2e7d32]">
-          ✅ Pago
+        <span className="text-green-600 font-bold bg-green-100 py-1.5 px-3 rounded-[20px] text-xs font-sans inline-flex items-center gap-1.5">
+          <CheckCircle size={14} /> Pago
+        </span>
+      );
+    } else {
+      return (
+        <span className="text-brandPink font-bold bg-[#ffe0ec] py-1.5 px-3 rounded-[20px] text-xs font-sans inline-flex items-center gap-1.5">
+          <CreditCard size={14} /> Aguardando Pagamento
         </span>
       );
     }
-    return (
-      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-500 border border-red-200">
-        💳 Aguardando Pagamento
-      </span>
-    );
   };
 
   const handleOrderClick = (book) => {
@@ -112,8 +115,8 @@ export default function MyAccountPage() {
       <NavBar />
       
       <div className="min-h-screen flex flex-col justify-start items-center gap-8 py-10 pt-[60px] m-auto">
-        <div className="w-full flex px-8 items-center justify-evenly mt-40">
-          <div>
+        <div className="w-full flex flex-col md:flex-row px-4 md:px-8 items-center justify-between mt-10 md:mt-40 max-w-[900px] gap-6 md:gap-0">
+          <div className="text-center md:text-left">
             <h2 className="text-[#FF4081] font-chango m-0 p-0 text-2xl">
               {user?.email || "Minha Conta"}
             </h2>
@@ -135,32 +138,32 @@ export default function MyAccountPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-12 max-w-[900px] w-full px-5 mx-auto">
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">Total de pedidos</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">
-                {loading ? "..." : books.length}
-              </h3>
+          <div className="bg-white p-5 rounded-[15px] shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-center flex-1 min-w-[150px] flex gap-4 items-center justify-center transition-transform hover:-translate-y-[3px]">
+            <div className="text-green-500 bg-green-50 w-12 h-12 rounded-full flex items-center justify-center">
+              <CheckCircle size={24} />
             </div>
-            <div className="text-2xl">🧾</div>
+            <div className="text-left">
+              <h3 className="m-0 text-3xl font-chango text-mainText">{loading ? "..." : completedBooks.length}</h3>
+              <p className="m-0 text-sm font-sans text-brandPink">Pagos</p>
+            </div>
           </div>
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">Concluídos</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">
-                {loading ? "..." : completedBooks.length}
-              </h3>
+          <div className="bg-white p-5 rounded-[15px] shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-center flex-1 min-w-[150px] flex gap-4 items-center justify-center transition-transform hover:-translate-y-[3px]">
+            <div className="text-brandPink bg-[#ffe0ec] w-12 h-12 rounded-full flex items-center justify-center">
+              <CreditCard size={24} />
             </div>
-            <div className="text-2xl">✅</div>
+            <div className="text-left">
+              <h3 className="m-0 text-3xl font-chango text-mainText">{loading ? "..." : pendingBooks.length}</h3>
+              <p className="m-0 text-sm font-sans text-brandPink">Aguardando Pagamento</p>
+            </div>
           </div>
-          <div className="bg-white py-3 px-6 rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.6)] flex justify-between items-center w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_25px_rgba(0,0,0,0.15)] cursor-default">
-            <div className="my-3 text-start">
-              <p className="my-2.5">Aguardando Pagamento</p>
-              <h3 className="text-brandPink font-chango m-0 p-0 text-xl">
-                {loading ? "..." : pendingBooks.length}
-              </h3>
+          <div className="bg-white p-5 rounded-[15px] shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-center flex-1 min-w-[150px] flex gap-4 items-center justify-center transition-transform hover:-translate-y-[3px]">
+            <div className="text-mainText bg-gray-100 w-12 h-12 rounded-full flex items-center justify-center">
+              <Library size={24} />
             </div>
-            <div className="text-2xl">💳</div>
+            <div className="text-left">
+              <h3 className="m-0 text-3xl font-chango text-mainText">{loading ? "..." : books.length}</h3>
+              <p className="m-0 text-sm font-sans text-brandPink">Total de pedidos</p>
+            </div>
           </div>
         </div>
 
@@ -177,15 +180,15 @@ export default function MyAccountPage() {
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-300 text-red-700 text-sm rounded-lg px-4 py-3">
-              ⚠️ {error}
+            <div className="flex bg-red-50 p-4 rounded-lg border border-red-200 mb-6 text-red-600 font-sans text-sm m-auto max-w-[800px] items-center gap-2">
+              <AlertTriangle size={18} className="shrink-0" /> <span className="m-0">{error}</span>
             </div>
           )}
 
           {!loading && !error && books.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-4xl mb-4">📚</p>
-              <p className="text-[#666] font-sans text-base">
+            <div className="text-center py-10 bg-[#fafafa] rounded-[15px] border-2 border-dashed border-[#eee] m-auto max-w-[800px] flex flex-col items-center">
+              <Library size={48} className="text-[#ccc] mb-4" />
+              <p className="font-sans text-mainText text-base m-0">
                 Você ainda não tem nenhum pedido.
               </p>
               <Link
@@ -220,37 +223,38 @@ export default function MyAccountPage() {
                           : "bg-gradient-to-br from-red-50 to-orange-50"
                       }`}
                     >
-                      <span className="text-3xl">{isPaid ? "📖" : "📕"}</span>
+                      <span className="text-brandPink">
+                        {isPaid ? <BookOpen size={28} /> : <Book size={28} />}
+                      </span>
                     </div>
                     <div className="flex-1 flex flex-col gap-2 w-full">
-                      <div className="flex justify-between items-center w-full">
-                        <span className="text-base font-bold text-[#111]">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-2 sm:gap-0">
+                        <span className="text-base font-bold text-[#111] break-all">
                           {book.title || `Livro #${book.id}`}
                         </span>
-                        {getStatusBadge(book.statusPay)}
+                        <div className="shrink-0">{getStatusBadge(book.statusPay)}</div>
                       </div>
                       <div className="flex items-center gap-4 text-[13px] text-[#555] mb-1.5 font-sans flex-wrap">
-                        <span>📅 {formatDate(book.createAt)}</span>
-                        <span>
-                          📄 {book.totalPages} página
-                          {book.totalPages === 1 ? "" : "s"}
+                        <span className="flex items-center gap-1.5"><Calendar size={14} /> {formatDate(book.createAt)}</span>
+                        <span className="flex items-center gap-1.5">
+                          <FileText size={14} /> {book.totalPages} página{book.totalPages !== 1 ? "s" : ""}
                         </span>
                         {book.totalPages != null && (
                           <span className="font-semibold text-[#333]">
-                            {formatPrice(book.totalPages * 0.5)}
+                            {formatPrice(book.totalPages * 1)}
                           </span>
                         )}
                       </div>
                       
-                      <div className="flex items-center gap-2.5 mt-1.5 w-full">
+                      <div className="flex flex-wrap items-center gap-2.5 mt-1.5 w-full">
                         {isPaid ? (
                           <Link
                             to={`/download/${book.id}`}
                             state={{ bookTitle: book.title }}
                             onClick={(e) => e.stopPropagation()}
-                            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold cursor-pointer no-underline transition-all duration-200 border-none font-sans bg-[#ffe033] text-[#222] hover:bg-brandYellow hover:-translate-y-0.5"
+                            className="bg-brandPink text-white border-none py-2 px-5 rounded-[20px] cursor-pointer font-bold font-sans hover:bg-brandPinkDark text-sm transition-all duration-300 shadow-[0_2px_5px_rgba(255,64,129,0.3)] hover:shadow-[0_4px_8px_rgba(255,64,129,0.4)] hover:-translate-y-[2px] w-full sm:w-auto mt-2 sm:mt-0 flex items-center justify-center gap-1.5 whitespace-nowrap"
                           >
-                            💹 Baixar PDF
+                            <Download size={16} /> Baixar PDF
                           </Link>
                         ) : (
                           <button
@@ -275,8 +279,8 @@ export default function MyAccountPage() {
                                 </span>
                               </>
                             ) : (
-                              "💳 Pagar agora"
-                            )}
+                                <><CreditCard size={16} /> Pagar agora</>
+                              )}
                           </button>
                         )}
                       </div>

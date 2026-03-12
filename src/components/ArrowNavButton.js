@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ArrowDown, ArrowUp } from "lucide-react";
 
 export default function ArrowNavButton() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -67,7 +68,7 @@ export default function ArrowNavButton() {
           transform: scrollProgress < 50 ? "translateY(0)" : "translateY(-2px)",
         }}
       >
-        {scrollProgress < 50 ? "⬇" : "⬆"}
+        {scrollProgress < 50 ? <ArrowDown size={24} /> : <ArrowUp size={24} />}
       </button>
     </button>
   );

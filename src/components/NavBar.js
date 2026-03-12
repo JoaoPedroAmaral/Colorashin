@@ -46,12 +46,10 @@ export default function NavBar() {
           <div className="flex items-center">
             <img
               src="/assets/image/jashiHeadIcon.png"
-              width="50px"
-              height="50px"
-              className="iconNavBar"
+              className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] iconNavBar"
               alt="Logo"
             />
-            <h3 className="colorashin font-chango text-brandPink m-0 p-0">
+            <h3 className="colorashin font-chango text-brandPink m-0 p-0 text-lg sm:text-xl md:text-2xl hidden sm:flex ml-2">
               <span>C</span>
               <span>o</span>
               <span>l</span>
@@ -66,20 +64,20 @@ export default function NavBar() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-2.5 mx-5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 mx-2 sm:mx-5">
           {isAuthenticated ? (
             <>
-              <span className="text-sm font-sans text-mainText font-semibold truncate max-w-[180px]">
+              <span className="text-xs sm:text-sm font-sans text-mainText font-semibold truncate max-w-[80px] sm:max-w-[180px] hidden md:block">
                 {user?.email}
               </span>
               <Link
                 to="/account"
-                className="bg-transparent text-mainText border-2 border-mainText py-1.5 px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg no-underline text-sm"
+                className="bg-transparent text-mainText border-2 border-mainText py-1 px-2 sm:py-1.5 sm:px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg no-underline text-xs sm:text-sm whitespace-nowrap"
               >
-                Minha Conta
+                <span className="hidden sm:inline">Minha </span>Conta
               </Link>
               <button
-                className="bg-brandPink text-white border-none py-2 px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark text-sm"
+                className="bg-brandPink text-white border-none py-1.5 px-3 sm:py-2 sm:px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark text-xs sm:text-sm"
                 onClick={handleLogout}
               >
                 Sair
@@ -88,13 +86,13 @@ export default function NavBar() {
           ) : (
             <>
               <button
-                className="bg-brandPink text-white border-none py-2 px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark"
+                className="bg-brandPink text-white border-none py-1.5 px-3 sm:py-2 sm:px-4 rounded cursor-pointer font-sans font-bold hover:bg-brandPinkDark text-xs sm:text-base"
                 onClick={openLogin}
               >
                 Login
               </button>
               <button
-                className="bg-transparent text-mainText border-2 border-mainText py-1.5 px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg"
+                className="bg-transparent text-mainText border-2 border-mainText py-1 px-2 sm:py-1.5 sm:px-3.5 rounded cursor-pointer font-bold font-sans hover:bg-mainText hover:text-mainBg text-xs sm:text-base whitespace-nowrap"
                 onClick={openSignup}
               >
                 Registre-se

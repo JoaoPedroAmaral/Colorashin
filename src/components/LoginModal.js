@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function LoginModal({
   isOpen,
@@ -64,15 +65,15 @@ export default function LoginModal({
 
         {/* Error message */}
         {error && (
-          <div className="bg-red-50 border border-red-300 text-red-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left">
-            ⚠️ {error}
+          <div className="bg-red-50 border border-red-300 text-red-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left flex gap-2 items-center">
+            <AlertCircle size={18} className="shrink-0" /> {error}
           </div>
         )}
 
         {/* Success message */}
         {localMessage && (
-          <div className="bg-green-50 border border-green-300 text-green-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left">
-            ✅ {localMessage}
+          <div className="bg-green-50 border border-green-300 text-green-700 text-sm rounded-lg px-4 py-2.5 mb-4 text-left flex gap-2 items-center">
+            <CheckCircle2 size={18} className="shrink-0" /> {localMessage}
           </div>
         )}
 

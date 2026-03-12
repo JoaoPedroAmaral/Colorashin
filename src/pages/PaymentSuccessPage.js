@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { CheckCircle, AlertTriangle } from "lucide-react";
 import NavBar from "../components/NavBar";
 
 export default function PaymentSuccessPage() {
@@ -31,9 +32,11 @@ export default function PaymentSuccessPage() {
       <NavBar />
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 m-auto px-6">
         {isApproved ? (
-          <>
-            <div className="text-6xl animate-bounce">✅</div>
-            <h1 className="text-brandPink font-chango m-0 p-0 text-3xl text-center">
+          <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+            <div className="flex justify-center mb-4 text-green-500 animate-bounce">
+              <CheckCircle size={64} />
+            </div>
+            <h1 className="text-brandPink font-chango text-3xl mb-4">
               Pagamento Aprovado!
             </h1>
             <p className="text-mainText font-sans text-center text-lg max-w-md">
@@ -44,17 +47,19 @@ export default function PaymentSuccessPage() {
                 </span>
               )}
             </p>
-          </>
+          </div>
         ) : (
-          <>
-            <div className="text-6xl">⚠️</div>
-            <h1 className="text-brandPink font-chango m-0 p-0 text-3xl text-center">
+          <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+            <div className="flex justify-center mb-4 text-amber-500">
+              <AlertTriangle size={64} />
+            </div>
+            <h1 className="text-red-500 font-chango text-3xl mb-4">
               Pagamento {status || "Pendente"}
             </h1>
             <p className="text-mainText font-sans text-center text-lg max-w-md">
               Verifique o status do seu pedido no histórico.
             </p>
-          </>
+          </div>
         )}
 
         <p className="text-sm text-[#999] font-sans mt-4">

@@ -43,7 +43,6 @@ export default function ServerWatcher() {
         setStatus("waking");
         setVisible(true);
         try {
-          // Wait for the actual request to finish awake
           await api.get("/");
           setStatus("online");
           setTimeout(() => setVisible(false), 3000);
