@@ -10,10 +10,8 @@ export default function InitialPage() {
       <NavBar />
 
       <div className="min-h-screen flex flex-col m-auto">
-        {/* Hero Section */}
         <div className="w-full bg-gradient-to-b from-mainBg to-secondaryBg py-20 lg:py-32 px-6 flex justify-center items-center overflow-hidden">
           <div className="max-w-[1200px] w-full flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
-            {/* Left Column (Text & Buttons) */}
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 max-w-[600px] z-10 w-full">
               <h1 className="text-brandPink font-chango m-0 p-0 text-[1.5rem] sm:text-[2rem] lg:text-[2.5rem] leading-tight">
                 Transforme Imagens em
@@ -47,22 +45,18 @@ export default function InitialPage() {
               </div>
             </div>
 
-            {/* Right Column (Hero Images Visualization) */}
             <div className="flex-1 w-full max-w-[500px] flex justify-center items-center relative mt-10 md:mt-16 lg:mt-0">
               <div className="relative w-full aspect-square max-h-[450px]">
-                {/* Original Photo */}
                 <img
                   src="/assets/image/colorImage.jpg"
                   className="absolute top-0 right-4 sm:right-12 w-[60%] sm:w-[55%] rounded-[20px] shadow-[0_15px_30px_rgba(0,0,0,0.15)] border-4 border-white z-10 -rotate-[6deg] transition-all duration-500 hover:rotate-0 hover:scale-105 object-cover"
                   alt="Original colorida"
                 />
 
-                {/* Magic Sparkles Icon in between */}
                 <div className="absolute top-[40%] right-[35%] bg-white p-3 rounded-full shadow-lg z-[15] hidden sm:flex items-center justify-center text-brandPink transform translate-x-1/2 -translate-y-1/2 animate-bounce">
                   <Sparkles size={28} />
                 </div>
 
-                {/* Coloring Photo */}
                 <img
                   src="/assets/image/coloringImage.png"
                   className="absolute bottom-4 left-4 sm:left-12 w-[65%] sm:w-[60%] rounded-[20px] shadow-[0_20px_40px_rgba(0,0,0,0.2)] border-4 border-white z-20 rotate-[5deg] transition-all duration-500 hover:rotate-0 hover:scale-105 object-cover bg-white"
@@ -73,7 +67,6 @@ export default function InitialPage() {
           </div>
         </div>
 
-        {/* Why Choose Section */}
         <div className="bg-secondaryBg w-full px-4 sm:px-8 flex flex-col justify-center items-center text-center py-20 md:py-[12rem]">
           <h1 className="text-white text-[1.5rem] md:text-[2rem] font-chango drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)] m-0 p-0">
             Por que escolher Colorashin?
@@ -132,7 +125,6 @@ export default function InitialPage() {
           </div>
         </div>
 
-        {/* How it Works Section */}
         <div className="px-4 sm:px-8 text-center bg-gradient-to-b from-secondaryBg to-mainBg w-full py-20 md:py-28">
           <h1 className="text-brandPink font-chango m-0 p-0 text-[1.5rem] md:text-[2rem]">
             Como Funciona
@@ -142,7 +134,6 @@ export default function InitialPage() {
           </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-0 max-w-[1100px] mx-auto mt-12">
-            {/* Step 1 */}
             <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-6 sm:p-8 w-full max-w-[320px] flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(0,0,0,0.12)] relative">
               <div className="h-16 w-16 rounded-full bg-brandPink text-white flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(255,64,129,0.3)]">
                 <Upload size={28} />
@@ -155,13 +146,11 @@ export default function InitialPage() {
               </p>
             </div>
 
-            {/* Connector Arrow */}
             <div className="py-4 md:py-0 md:px-4 text-[#ccc] shrink-0">
               <ArrowRight size={28} className="hidden md:block" />
               <ArrowDown size={28} className="block md:hidden mx-auto" />
             </div>
 
-            {/* Step 2 */}
             <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-6 sm:p-8 w-full max-w-[320px] flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(0,0,0,0.12)] relative">
               <div className="h-16 w-16 rounded-full bg-brandPink text-white flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(255,64,129,0.3)]">
                 <Sparkles size={28} />
@@ -174,13 +163,11 @@ export default function InitialPage() {
               </p>
             </div>
 
-            {/* Connector Arrow */}
             <div className="py-4 md:py-0 md:px-4 text-[#ccc] shrink-0">
               <ArrowRight size={28} className="hidden md:block" />
               <ArrowDown size={28} className="block md:hidden mx-auto" />
             </div>
 
-            {/* Step 3 */}
             <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-6 sm:p-8 w-full max-w-[320px] flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(0,0,0,0.12)] relative">
               <div className="h-16 w-16 rounded-full bg-brandPink text-white flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(255,64,129,0.3)]">
                 <Download size={28} />
@@ -195,7 +182,6 @@ export default function InitialPage() {
           </div>
         </div>
 
-        {/* Example Showcase Section */}
         <div className="w-full bg-gradient-to-b from-mainBg to-secondaryBg py-20 md:py-28 px-4 sm:px-8">
           <div className="max-w-[1000px] mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-16">
             <div className="flex-1 text-center md:text-left">
@@ -238,7 +224,6 @@ export default function InitialPage() {
           </div>
         </div>
 
-        {/* Ready / CTA Section */}
         <div
           className="w-full bg-secondaryBg py-20 md:py-28 px-4 text-center"
           id="ready"
@@ -257,7 +242,6 @@ export default function InitialPage() {
               Experimentar
             </Link>
 
-            {/* Stats */}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-16 mt-14">
               <div className="flex flex-col items-center">
                 <span className="text-brandPink font-chango text-3xl sm:text-4xl">PDF</span>

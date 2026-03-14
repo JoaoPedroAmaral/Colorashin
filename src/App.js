@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ServerWatcher from "./components/ServerWatcher";
 
-// Melhoria de Performance: Code Splitting e Lazy Loading
 const InitialPage = lazy(() => import("./pages/InitialPage"));
 const TransformPage = lazy(() => import("./pages/TransformPage"));
 const DownloadPage = lazy(() => import("./pages/DownloadPage"));
 const MyAccountPage = lazy(() => import("./pages/MyAccountPage"));
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
+const HelpPage = lazy(() => import("./pages/HelpPage"));
+const TermsPage = lazy(() => import("./pages/TermsPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 
 function App() {
   return (
@@ -32,11 +34,10 @@ function App() {
             <Route path="/payment-success" element={<PaymentSuccessPage />} />
             <Route path="/account" element={<MyAccountPage />} />
             <Route path="/about" element={<AboutPage />} />
-            {/* Placeholder for remaining links */}
-            <Route path="/help" element={<div>Ajuda</div>} />
-            <Route path="/contact" element={<div>Contato</div>} />
-            <Route path="/terms" element={<div>Termos de Uso</div>} />
-            <Route path="/privacy" element={<div>Privacidade</div>} />
+            <Route path="/help" element={<HelpPage />} />
+            <Route path="/contact" element={<HelpPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
           </Routes>
         </Suspense>
       </AuthProvider>

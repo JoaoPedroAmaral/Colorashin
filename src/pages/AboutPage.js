@@ -9,7 +9,6 @@ export default function AboutPage() {
     <>
       <NavBar />
       <div className="min-h-screen flex flex-col justify-start items-center gap-10 py-10 mt-[60px] m-auto px-4 sm:px-8 max-w-[1000px]">
-        {/* Header Section */}
         <div className="text-center w-full mt-10 md:mt-20">
           <h1 className="text-brandPink font-chango text-3xl md:text-5xl m-0 p-0 drop-shadow-sm">
             Sobre o Colorashin
@@ -24,7 +23,6 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* How It Works Flow */}
         <div className="w-full bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] p-6 md:p-10 text-center">
           <h2 className="text-brandPink font-chango text-2xl mb-8">
             Fluxo de Criação
@@ -67,9 +65,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Requirements and Improvements Grids */}
         <div className="flex flex-col lg:flex-row w-full gap-8">
-          {/* Requirements */}
           <div className="flex-1 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] p-6 md:p-10">
             <h2 className="text-brandPink font-chango text-2xl mb-6">
               Requisitos
@@ -93,7 +89,6 @@ export default function AboutPage() {
             </ul>
           </div>
 
-          {/* Next Steps / Improvements */}
           <div className="flex-1 bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] p-6 md:p-10">
             <h2 className="text-brandPink font-chango text-2xl mb-6">
               Próximas Melhorias
@@ -113,7 +108,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Example Section */}
         <div className="w-full bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] p-6 md:p-10 text-center mb-10">
           <h2 className="text-brandPink font-chango text-2xl mb-8">Exemplo</h2>
           <div className="flex flex-col md:flex-row justify-center items-center gap-8">

@@ -31,14 +31,12 @@ export default function DownloadPage() {
       setLoading(true);
       setError(null);
       try {
-        // Fetch book metadata first
         const metadata = await getBookById(bookId);
         setBookData({
           title: metadata.title || `Livro-${bookId}`,
           status: metadata.statusPay,
         });
 
-        // Then fetch the PDF blob
         const response = await api.get(`/api/books/${bookId}/download-url`, {
           responseType: "blob",
         });
@@ -62,7 +60,6 @@ export default function DownloadPage() {
 
     fetchPdf();
 
-    // Cleanup blob URL on unmount
     return () => {
       if (blobUrl) URL.revokeObjectURL(blobUrl);
     };
@@ -73,12 +70,11 @@ export default function DownloadPage() {
 
     const rawTitle = bookData?.title || `livro-colorir-${bookId}`;
 
-    // Sanitize the title to make it a valid filename
     const safeTitle = rawTitle
       .toLowerCase()
-      .replaceAll(/[^a-z0-9]/g, "-") // replace non-alphanumeric with -
-      .replaceAll(/-+/g, "-") // replace multiple - with single -
-      .replaceAll(/(^-+|-+$)/g, ""); // trim - from start and end
+      .replaceAll(/[^a-z0-9]/g, "-")
+      .replaceAll(/-+/g, "-")
+      .replaceAll(/(^-+|-+$)/g, "");
 
     const filename = safeTitle
       ? `${safeTitle}.pdf`
@@ -124,7 +120,6 @@ export default function DownloadPage() {
     <>
       <NavBar />
       <div className="min-h-screen flex flex-col justify-start items-center gap-8 py-10 mt-[60px] m-auto">
-        {/* Header */}
         <div className="w-full flex px-4 md:px-8 flex-col md:flex-row items-center justify-between mt-10 md:mt-20 max-w-[900px]">
           <div className="text-center md:text-left mb-6 md:mb-0">
             <h1 className="text-brandPink font-chango text-2xl m-0 p-0 flex items-center justify-center md:justify-start gap-3">
@@ -147,7 +142,6 @@ export default function DownloadPage() {
           </div>
         </div>
 
-        {/* Loading */}
         {loading && (
           <div className="flex flex-col items-center gap-4 mt-8">
             <div className="w-12 h-12 border-4 border-[#ccc] border-t-brandPink rounded-full animate-spin" />
@@ -157,7 +151,6 @@ export default function DownloadPage() {
           </div>
         )}
 
-        {/* Error */}
         {!loading && error && (
           <div className="flex flex-col items-center gap-4 mt-8">
             <div className="flex justify-center mb-4 text-amber-500">
@@ -173,10 +166,8 @@ export default function DownloadPage() {
           </div>
         )}
 
-        {/* PDF Ready */}
         {!loading && !error && pdfBlobUrl && (
           <div className="max-w-[900px] w-full px-5 mx-auto flex flex-col gap-6">
-            {/* Action Buttons */}
             <div className="flex gap-3 justify-center flex-wrap">
               <button
                 onClick={handleDownload}
@@ -192,7 +183,6 @@ export default function DownloadPage() {
               </button>
             </div>
 
-            {/* Embedded PDF Viewer */}
             <div className="w-full bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.3)] overflow-hidden">
               <iframe
                 src={pdfBlobUrl}

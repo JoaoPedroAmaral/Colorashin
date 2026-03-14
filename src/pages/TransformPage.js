@@ -42,7 +42,6 @@ export default function TransformPage() {
 
   const handleSubmit = async () => {
     if (!isAuthenticated) {
-      // Redirect to login if not logged in
       return;
     }
 
@@ -63,7 +62,6 @@ export default function TransformPage() {
   const isFormValid = selectedFiles.length > 0 && title.trim();
   const isDisabled = !isAuthenticated || (status !== "idle" && status !== "error");
 
-  // Status messages
   const statusMessages = {
     uploading: `Enviando imagens... ${uploadProgress}%`,
     processing: "Gerando pagamento...",
@@ -81,7 +79,6 @@ export default function TransformPage() {
           Envie suas imagens e veja a mágica acontecer!
         </p>
 
-        {/* Title Input */}
         <div className="w-full max-w-[700px] mt-8 flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row gap-4 w-full">
             <div className="flex-1 text-left">
@@ -110,7 +107,6 @@ export default function TransformPage() {
           </div>
         </div>
 
-        {/* File Upload Area */}
         <label
           className={`bg-[#f0f0f0] border-4 border-dashed border-[#ccc] p-5 sm:p-[50px] w-full max-w-[700px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-center transition-all duration-300 font-chango hover:border-brandPink cursor-pointer relative mt-4 rounded-xl flex flex-col items-center justify-center ${isDisabled ? "opacity-50 pointer-events-none" : ""}`}
           htmlFor="fileInput"
@@ -164,7 +160,6 @@ export default function TransformPage() {
           disabled={isDisabled}
         />
 
-        {/* Upload Progress Bar */}
         {status === "uploading" && (
           <div className="w-full max-w-[700px] mt-4">
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
@@ -176,7 +171,6 @@ export default function TransformPage() {
           </div>
         )}
 
-        {/* Status Message */}
         {statusMessages[status] && (
           <div className="mt-4 px-6 py-3 bg-[#fff3e0] border border-[#ffcc80] rounded-lg text-[#e65100] font-sans text-sm font-semibold flex items-center gap-2">
             <span className="inline-flex">
@@ -188,7 +182,6 @@ export default function TransformPage() {
           </div>
         )}
 
-        {/* Error Message */}
         {error && (
           <div className="mt-4 px-6 py-3 bg-red-50 border border-red-300 rounded-lg text-red-700 font-sans text-sm max-w-[700px] w-full">
             <p className="m-0 font-semibold flex items-center gap-2">
@@ -203,7 +196,6 @@ export default function TransformPage() {
           </div>
         )}
 
-        {/* Submit Button */}
         {!isAuthenticated ? (
           <div className="mt-8 flex flex-col items-center">
             <p className="text-sm text-[#555] font-sans flex items-center gap-2">
@@ -234,7 +226,6 @@ export default function TransformPage() {
       <Footer />
       <ArrowNavButton />
 
-      {/* Login Modal Overlay */}
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}

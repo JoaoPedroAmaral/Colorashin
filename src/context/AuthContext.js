@@ -22,7 +22,6 @@ export function AuthProvider({ children }) {
 
   const isAuthenticated = !!token;
 
-  // ── Listen for 401 expiry events from the Axios interceptor ─────
   useEffect(() => {
     const handleExpired = () => {
       setToken(null);
@@ -32,13 +31,11 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener("auth:expired", handleExpired);
   }, []);
 
-  // ── Login ────────────────────────────────────────────────────────
   const login = useCallback(async ({ email, password }) => {
     setIsLoading(true);
     setError(null);
     try {
       const data = await loginUser({ email, password });
-      // Debug: check exact response shape in browser console
       console.log("[AUTH] Login response:", JSON.stringify(data, null, 2));
       const receivedToken = data.token || data.accessToken;
       const userData = { email, userId: data.userId || data.id };
@@ -61,14 +58,12 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // ── Register ─────────────────────────────────────────────────────
   const register = useCallback(async ({ email, password }) => {
     setIsLoading(true);
     setError(null);
     try {
       const data = await registerUser({ email, password });
 
-      // If backend returns a token on register, log the user in immediately
       if (data.token || data.accessToken) {
         const receivedToken = data.token || data.accessToken;
         const userData = { email, userId: data.userId || data.id };
@@ -93,7 +88,6 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  // ── Logout ───────────────────────────────────────────────────────
   const logout = useCallback(() => {
     localStorage.removeItem("jashincolor_token");
     localStorage.removeItem("jashincolor_user");
@@ -102,7 +96,6 @@ export function AuthProvider({ children }) {
     setError(null);
   }, []);
 
-  // ── Clear error ──────────────────────────────────────────────────
   const clearError = useCallback(() => setError(null), []);
 
   return (

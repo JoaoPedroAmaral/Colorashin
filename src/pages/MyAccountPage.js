@@ -136,7 +136,6 @@ export default function MyAccountPage() {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-12 max-w-[900px] w-full px-5 mx-auto">
           <div className="bg-white p-5 rounded-[15px] shadow-[0_2px_10px_rgba(0,0,0,0.05)] text-center flex-1 min-w-[150px] flex gap-4 items-center justify-center transition-transform hover:-translate-y-[3px]">
             <div className="text-green-500 bg-green-50 w-12 h-12 rounded-full flex items-center justify-center">
@@ -167,7 +166,6 @@ export default function MyAccountPage() {
           </div>
         </div>
 
-        {/* Order History */}
         <div className="w-[90%] max-w-[900px] mt-10">
           <h2 className="text-xl font-bold text-[#333] mb-5">
             Histórico de Pedidos
@@ -289,7 +287,6 @@ export default function MyAccountPage() {
                 );
               })}
 
-              {/* Pagination Controls */}
               {totalPagesCount > 1 && (
                 <div className="flex justify-center items-center gap-4 mt-8">
                   <button
